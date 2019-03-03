@@ -11,10 +11,9 @@ import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.widget.Toast;
+import donlon.android.apwalker.objectmodel.ApCollectionInfo;
 
 import java.util.List;
-
-import donlon.android.apwalker.objectmodel.ApCollectionInfo;
 
 public class WalkerManager {
   private Context mContext;
@@ -23,26 +22,26 @@ public class WalkerManager {
   private int mScanSequence;
 
   private boolean mInitialized;
-//  private boolean mRunning;
+  //private boolean mRunning;
 
   private String mTag;
 
   private Handler mIntervalHandler;
   private Runnable mIntervalRunnable = () -> mWifiManager.startScan();
 
-//  public WalkerManager(Context context) {
-//    this(context, "Default");
-//  }
+  //public WalkerManager(Context context) {
+  //  this(context, "Default");
+  //}
 
   public WalkerManager(Context context) {
     mContext = context;
     mScanSequence = 0;
 
     mInitialized = false;
-//    mRunning = false;
+    //mRunning = false;
 
-//    mTag = tag;
-//    mStorage = DbManager.getDefaultStorage(context);
+    //mTag = tag;
+    //mStorage = DbManager.getDefaultStorage(context);
 
     mWifiManager = (WifiManager) mContext.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
@@ -74,7 +73,7 @@ public class WalkerManager {
       return false;
     }
 
-    if (mWifiManager == null ||mStorage == null) {
+    if (mWifiManager == null || mStorage == null) {
       return false;
     }
 
@@ -92,7 +91,7 @@ public class WalkerManager {
     mContext.registerReceiver(mWifiScanReceiver, intentFilter);
 
     mInitialized = true;
-//    mRunning = startImmediately;
+    //mRunning = startImmediately;
 
     return true;
   }
@@ -100,18 +99,18 @@ public class WalkerManager {
   @SuppressLint("DefaultLocale")
   private void scanSucceed() {
     List<ScanResult> results = mWifiManager.getScanResults();
-    mSnackPresenter.show(String.format("Scanned %d AP(s), seq=%d", results.size(), mScanSequence) ,
+    mSnackPresenter.show(String.format("Scanned %d AP(s), seq=%d", results.size(), mScanSequence),
             Toast.LENGTH_SHORT);
     saveRecordingSet(results);
   }
 
   private void scanFailed() {
     if (mWifiManager.getWifiState() == WifiManager.WIFI_STATE_DISABLED) {
-      Toast.makeText(mContext,"当前区域没有无线网络", Toast.LENGTH_SHORT).show();
-    } else if (mWifiManager.getWifiState() == WifiManager.WIFI_STATE_ENABLING){
-      Toast.makeText(mContext,"WiFi正在开启，请稍后重新点击扫描", Toast.LENGTH_SHORT).show();
+      Toast.makeText(mContext, "当前区域没有无线网络", Toast.LENGTH_SHORT).show();
+    } else if (mWifiManager.getWifiState() == WifiManager.WIFI_STATE_ENABLING) {
+      Toast.makeText(mContext, "WiFi正在开启，请稍后重新点击扫描", Toast.LENGTH_SHORT).show();
     } else {
-      Toast.makeText(mContext,"WiFi没有开启，无法扫描", Toast.LENGTH_SHORT).show();
+      Toast.makeText(mContext, "WiFi没有开启，无法扫描", Toast.LENGTH_SHORT).show();
     }
   }
 
@@ -146,7 +145,7 @@ public class WalkerManager {
       return;
     }
 
-    for(ScanResult result : results) {
+    for (ScanResult result : results) {
       mStorage.insertApInfo(mTag, mScanSequence, result);
     }
     mStorage.insertActiveApInfo(mTag, mScanSequence, mWifiManager.getConnectionInfo());
@@ -176,7 +175,7 @@ public class WalkerManager {
 
   public void stop() {
     mStorage.close();
-//    mInitialized = false;
+    //mInitialized = false;
     mRunning = false;
   }
 
@@ -192,7 +191,8 @@ public class WalkerManager {
     return mStorage.getApCollectionInfo(tagName);
   }
 
-  private SnackPresenter mSnackPresenter = (str, lengthShort) -> {};
+  private SnackPresenter mSnackPresenter = (str, lengthShort) -> {
+  };
 
   public void setSnackPresenter(SnackPresenter presenter) {
     mSnackPresenter = presenter;

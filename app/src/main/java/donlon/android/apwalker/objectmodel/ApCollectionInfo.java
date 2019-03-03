@@ -1,10 +1,11 @@
 package donlon.android.apwalker.objectmodel;
 
 public class ApCollectionInfo {
-  private String SSID;
+  private String ssid;
   private int count;
-  public ApCollectionInfo(String SSID, int count) {
-    this.SSID = SSID;
+
+  public ApCollectionInfo(String ssid, int count) {
+    this.ssid = ssid;
     this.count = count;
   }
 }

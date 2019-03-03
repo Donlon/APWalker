@@ -2,9 +2,7 @@ package donlon.android.apwalker.utils;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.widget.EditText;
-import android.widget.Toast;
 
 public class DialogUtils {
   public static AlertDialog.Builder getTipsDialogBuilder(Context context, String title, String content) {
@@ -20,15 +18,14 @@ public class DialogUtils {
 
     AlertDialog.Builder editDialog = new AlertDialog.Builder(context);
     editDialog.setTitle("Title");
-//    editDialog.setIcon(R.mipmap.ic_launcher_round);
+    //editDialog.setIcon(R.mipmap.ic_launcher_round);
 
     editDialog.setView(editText);
 
-    editDialog.setPositiveButton("OK",
-            (dialog, which) -> {
-              callback.callback(editText.getText().toString().trim());
-              dialog.dismiss();
-            });
+    editDialog.setPositiveButton("OK", (dialog, which) -> {
+      callback.callback(editText.getText().toString().trim());
+      dialog.dismiss();
+    });
     editDialog.create().show();
   }
 

@@ -9,11 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
-import java.util.List;
-
 import donlon.android.apwalker.R;
 import donlon.android.apwalker.objectmodel.TagsInfo;
+
+import java.util.List;
 
 public class TagsInfoAdapter extends ArrayAdapter<TagsInfo> {
   public TagsInfoAdapter(@NonNull Context context, @NonNull List<TagsInfo> objects) {
@@ -30,7 +29,7 @@ public class TagsInfoAdapter extends ArrayAdapter<TagsInfo> {
       return convertView;
     } else {
       v = LayoutInflater.from(getContext()).inflate(R.layout.tags_list_entry, parent, false);
-      holder = new ViewsHolder((TextView) v.findViewById(R.id.tv_tagName), (TextView) v.findViewById(R.id.tv_recodesCount));
+      holder = new ViewsHolder(v.findViewById(R.id.tv_tagName), v.findViewById(R.id.tv_recodesCount));
       v.setTag(holder);
       TagsInfo item = getItem(position);
       assert item != null;
@@ -45,6 +44,7 @@ public class TagsInfoAdapter extends ArrayAdapter<TagsInfo> {
   private class ViewsHolder {
     private TextView tvTagName;
     private TextView tvRecordsCount;
+
     ViewsHolder(TextView tvTagName, TextView tvRecordsCount) {
       this.tvTagName = tvTagName;
       this.tvRecordsCount = tvRecordsCount;

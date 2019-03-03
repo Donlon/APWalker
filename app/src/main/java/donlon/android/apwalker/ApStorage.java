@@ -9,13 +9,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import donlon.android.apwalker.objectmodel.ApCollectionInfo;
 import donlon.android.apwalker.objectmodel.TagsInfo;
 import donlon.android.apwalker.utils.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ApStorage {
   private Context mContext;
@@ -30,7 +29,7 @@ public class ApStorage {
 
   private boolean mOpen;
 
-  public ApStorage(Context context, String dbFileName){
+  public ApStorage(Context context, String dbFileName) {
     mDbFileName = dbFileName;
     mContext = context;
 
@@ -56,16 +55,16 @@ public class ApStorage {
   @SuppressLint("DefaultLocale")
   public void insertApInfo(String mTag, int mScanSequence, ScanResult result) {
     Logger.i("Insert:: BSSID: " + result.BSSID +
-    ", SSID: " + result.SSID +
-    ", capabilities: " + result.capabilities +
-    ", centerFreq0: " + result.centerFreq0 +
-    ", centerFreq1: " + result.centerFreq1 +
-    ", channelWidth: " + result.channelWidth +
-    ", frequency: " + result.frequency +
-    ", level: " + result.level +
-    ", operatorFriendlyName: " + result.operatorFriendlyName +
-    ", timestamp: " + result.timestamp +
-    ", venueName: " + result.venueName);
+            ", SSID: " + result.SSID +
+            ", capabilities: " + result.capabilities +
+            ", centerFreq0: " + result.centerFreq0 +
+            ", centerFreq1: " + result.centerFreq1 +
+            ", channelWidth: " + result.channelWidth +
+            ", frequency: " + result.frequency +
+            ", level: " + result.level +
+            ", operatorFriendlyName: " + result.operatorFriendlyName +
+            ", timestamp: " + result.timestamp +
+            ", venueName: " + result.venueName);
 
     ContentValues contentValues = new ContentValues();
     contentValues.put("Tag", mTag.replace('\'', '_'));
@@ -84,7 +83,7 @@ public class ApStorage {
 
     try {
       db.insertOrThrow(AP_INFO_TABLE, null, contentValues);
-    } catch (SQLException ex){
+    } catch (SQLException ex) {
       ex.printStackTrace();
     }
   }
@@ -109,7 +108,7 @@ public class ApStorage {
   }
 
   public void getUsedTags(List<TagsInfo> list) {
-//    db.query(AP_INFO_TABLE, )
+    //db.query(AP_INFO_TABLE, )
     list.clear();
     if (!mOpen) {
       return;
@@ -120,11 +119,11 @@ public class ApStorage {
     while (tagsCursor.moveToNext()) {
       String tag = tagsCursor.getString(0);
 
-      Cursor recordsCountCursor = db.rawQuery("select count(*) from " + AP_INFO_TABLE +" where Tag='" + tag + "'", null);
+      Cursor recordsCountCursor = db.rawQuery("select count(*) from " + AP_INFO_TABLE + " where Tag='" + tag + "'", null);
       recordsCountCursor.moveToFirst();
 
       Cursor apsCountCursor = db.rawQuery(
-              "select count(distinct BSSID) from " + AP_INFO_TABLE + " where Tag='" + tag +"'", null);
+              "select count(distinct BSSID) from " + AP_INFO_TABLE + " where Tag='" + tag + "'", null);
       apsCountCursor.moveToFirst();
 
       list.add(new TagsInfo(tag,
@@ -143,7 +142,7 @@ public class ApStorage {
       String apSSID = aps.getString(0);
 
       Cursor recordsCountCursor = db.rawQuery(
-              "select count(*) from " + AP_INFO_TABLE +" where Tag='" + tagName + "' and SSID='" + apSSID + "'", null);
+              "select count(*) from " + AP_INFO_TABLE + " where Tag='" + tagName + "' and SSID='" + apSSID + "'", null);
       recordsCountCursor.moveToFirst();
 
       list.add(new ApCollectionInfo(apSSID, recordsCountCursor.getInt(0)));
@@ -155,12 +154,11 @@ public class ApStorage {
 
   public List<ApCollectionInfo> getApCollectionInfo() {
     List<ApCollectionInfo> list = new ArrayList<>();
-    Cursor aps = db.rawQuery("select distinct SSID from " + AP_INFO_TABLE , null);
+    Cursor aps = db.rawQuery("select distinct SSID from " + AP_INFO_TABLE, null);
     while (aps.moveToNext()) {
       String apSSID = aps.getString(0);
 
-      Cursor recordsCountCursor = db.rawQuery(
-              "select count(*) from " + AP_INFO_TABLE +" where SSID='" + apSSID + "'", null);
+      Cursor recordsCountCursor = db.rawQuery("select count(*) from " + AP_INFO_TABLE + " where SSID='" + apSSID + "'", null);
       recordsCountCursor.moveToFirst();
 
       list.add(new ApCollectionInfo(apSSID, recordsCountCursor.getInt(0)));
@@ -206,6 +204,7 @@ public class ApStorage {
       sqLiteDatabase.execSQL(sql1);
     }
   }
+
   private class ActiveApInfoDBHelper extends SQLiteOpenHelper {
 
     public ActiveApInfoDBHelper(Context context) {
@@ -217,28 +216,28 @@ public class ApStorage {
       // create table Orders(Id integer primary key, CustomName text, OrderPrice integer, Country text);
       String sql1 =
               "create table if not exists " + AP_INFO_TABLE +
-              "(Id integer primary key," +
-              "Tag text," +
-              "ScanSequence integer," +
-              "BSSID integer," +
-              "SSID text," +
-              "Capabilities text," +
-              "CenterFreq0 integer," +
-              "CenterFreq1 integer," +
-              "ChannelWidth integer," +
-              "Frequency integer," +
-              "Level integer," +
-              "OperatorFriendlyName text," +
-              "Timestamp text," +
-              "VenueName text);";
+                      "(Id integer primary key," +
+                      "Tag text," +
+                      "ScanSequence integer," +
+                      "BSSID integer," +
+                      "SSID text," +
+                      "Capabilities text," +
+                      "CenterFreq0 integer," +
+                      "CenterFreq1 integer," +
+                      "ChannelWidth integer," +
+                      "Frequency integer," +
+                      "Level integer," +
+                      "OperatorFriendlyName text," +
+                      "Timestamp text," +
+                      "VenueName text);";
       sqLiteDatabase.execSQL(sql1);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-//      String sql = "DROP TABLE IF EXISTS " + TABLE_NAME;
-//      sqLiteDatabase.execSQL(sql);
-//      onCreate(sqLiteDatabase);
+      //String sql = "DROP TABLE IF EXISTS " + TABLE_NAME;
+      //sqLiteDatabase.execSQL(sql);
+      //onCreate(sqLiteDatabase);
     }
   }
 }

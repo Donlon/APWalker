@@ -2,14 +2,12 @@ package donlon.android.apwalker.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-
+import donlon.android.apwalker.ApStorage;
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import donlon.android.apwalker.ApStorage;
 
 public class DbManager {
   public static final String SHARED_PREFERENCE_STORAGE_DB_NAME = "databases";

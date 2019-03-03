@@ -6,14 +6,8 @@ import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.ListView;
-
+import android.widget.*;
 import donlon.android.apwalker.utils.DbManager;
-import donlon.android.apwalker.utils.ViewUtils;
 
 public class DbListPopupView extends FrameLayout {
 
@@ -43,9 +37,9 @@ public class DbListPopupView extends FrameLayout {
     if (inflater != null) {
       mContentView = inflater.inflate(R.layout.db_list_popup, this, true);
 
-      editNewDbName = ViewUtils.findViewById(mContentView, R.id.editDbName);
-      btnSubmit = ViewUtils.findViewById(mContentView, R.id.btnSubmit);
-      lvDbList = ViewUtils.findViewById(mContentView, R.id.lvKnownDBs);
+      editNewDbName = mContentView.findViewById(R.id.editDbName);
+      btnSubmit = mContentView.findViewById(R.id.btnSubmit);
+      lvDbList = mContentView.findViewById(R.id.lvKnownDBs);
 
       mAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_expandable_list_item_1);
 
@@ -61,7 +55,7 @@ public class DbListPopupView extends FrameLayout {
         }
       });
 
-//      addView(mContentView);
+      //addView(mContentView);
     }
   }
 
