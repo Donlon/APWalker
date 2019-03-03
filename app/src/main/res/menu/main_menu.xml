@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/mwnu_createTag"
+        android:title="Create Tag" />
+    <item
+        android:id="@+id/menu_selectDb"
+        android:title="Select Database" />
+    <item
+        android:id="@+id/menu_closeDb"
+        android:enabled="false"
+        android:title="Close Database" />
+    <group />
+</menu>
