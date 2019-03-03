@@ -9,8 +9,8 @@ import android.content.IntentFilter;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
-import android.support.design.widget.Snackbar;
 import android.widget.Toast;
+import com.google.android.material.snackbar.Snackbar;
 import donlon.android.apwalker.objectmodel.ApCollectionInfo;
 
 import java.util.List;
